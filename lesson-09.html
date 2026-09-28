@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Інформатика 9 клас — Моделі та моделювання</title>
+<style>
+:root{--blue:#174a7e;--light:#eaf3fc;--green:#287d3c;--gold:#a56b00;--ink:#203040;--muted:#5d6b78;--paper:#fff;--line:#d8e2ec}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#f3f6fa;color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{background:linear-gradient(130deg,#12385f,#2879ad);color:white;padding:34px 20px 28px}
+.hero{max-width:1100px;margin:auto}.eyebrow{font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;opacity:.85}h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;margin:.45em 0}header p{max-width:780px;font-size:1.1rem}
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.pill{background:#ffffff20;border:1px solid #ffffff55;border-radius:999px;padding:6px 12px;font-size:.9rem}
+nav{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);padding:9px 12px;display:flex;gap:8px;overflow-x:auto}
+nav a{white-space:nowrap;color:var(--blue);text-decoration:none;padding:7px 11px;border-radius:8px;font-weight:650;font-size:.9rem}nav a:hover{background:var(--light)}
+main{max-width:1100px;margin:24px auto;padding:0 16px 50px}.section{background:white;border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,30px);margin:20px 0;box-shadow:0 4px 18px #163a5b08}
+h2{color:var(--blue);font-size:clamp(1.45rem,3vw,2rem);margin:0 0 14px}h3{color:#244e72;margin:18px 0 8px}.lead{font-size:1.08rem;color:#405466}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.tile{background:#f7faff;border:1px solid var(--line);border-radius:14px;padding:16px}.visual{min-height:130px;display:grid;place-items:center;background:linear-gradient(145deg,#f0f7ff,#fff);border-radius:12px;margin-bottom:12px}.visual svg{width:min(100%,260px);height:150px}.tag{display:inline-block;border-radius:7px;padding:3px 9px;background:#eaf3fc;color:var(--blue);font-size:.82rem;font-weight:700}
+button,.btn{border:0;border-radius:10px;background:var(--blue);color:white;padding:10px 15px;font:inherit;font-weight:650;cursor:pointer}button:hover,.btn:hover{filter:brightness(1.12)}button.secondary{background:#eaf3fc;color:var(--blue)}button.green{background:var(--green)}button.gold{background:#a56b00}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.feedback{margin-top:12px;padding:12px 14px;border-radius:10px;background:#eef7ee;border-left:4px solid var(--green);display:none}.feedback.show{display:block}.bad{background:#fff0ed;border-color:#bd4c35}
+.question{padding:15px;border:1px solid var(--line);border-radius:12px;margin:12px 0}.question p{margin:0 0 10px;font-weight:700}.options{display:grid;gap:8px}.options label{display:flex;gap:9px;align-items:flex-start;padding:9px 11px;background:#f7f9fc;border-radius:8px;cursor:pointer}.options label:hover{background:#eaf3fc}
+input[type=text],textarea,select{width:100%;padding:10px 12px;border:1px solid #bccbd8;border-radius:9px;font:inherit;background:white}textarea{min-height:75px;resize:vertical}.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}.field label{display:block;font-weight:650;margin-bottom:5px}
+.flow{display:grid;gap:8px;max-width:650px;margin:18px auto;text-align:center}.flow div{padding:13px;border-radius:10px;background:#eaf3fc;font-weight:700}.flow .last{background:#d7ebd8}.arrow{color:var(--blue);font-size:1.3rem;line-height:1}
+table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:#eaf3fc;color:var(--blue)}
+.callout{padding:15px 17px;background:#fff3d9;border-left:5px solid #d49a22;border-radius:10px;margin:14px 0}.safetybox{padding:18px 20px;background:#fff8e8;border:2px solid #e1b34c;border-radius:14px;margin:14px 0}.safetybox h3{margin:0 0 10px;color:#8a5a00}.safetybox ul{margin:8px 0 0 20px;padding:0}.safetybox li{margin:5px 0}.progresswrap{height:9px;background:#dfe8ef;border-radius:20px;overflow:hidden;margin:10px 0}.progress{height:100%;width:0;background:#3b9b66;transition:width .25s}
+.timer{font-variant-numeric:tabular-nums;font-size:1.8rem;font-weight:800;color:var(--blue)}footer{text-align:center;color:var(--muted);padding:25px}
+@media print{nav,.no-print,button{display:none!important}body{background:white}.section{box-shadow:none;break-inside:avoid;margin:10px 0}header{background:#174a7e!important;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<header><div class="hero">
+<div class="eyebrow">Інформатика · 9 клас · НУШ</div>
+<h1>Моделі та моделювання</h1>
+<p>Види моделей. Фізичні та інформаційні моделі. Візуалізація, точність, абстрагування, гіпотеза й прогноз. Моделювання як спосіб наукового пізнання.</p>
+<div class="meta"><span class="pill">⏱ 45 хвилин</span><span class="pill">👥 Індивідуальна, парна й групова робота</span><span class="pill">🔬 Досліджуємо та створюємо моделі</span></div>
+</div></header>
+<nav>
+<a href="#plan">План</a><a href="#start">Мотивація</a><a href="#theory">Теорія</a><a href="#activity">Практика</a><a href="#quiz">Перевірка</a><a href="#reflection">Рефлексія</a><a href="#home">Домашнє</a>
+</nav>
+<main>
+<section class="section" id="plan">
+<h2>🧭 Маршрут уроку</h2>
+<div class="grid">
+<div class="tile"><span class="tag">1 хв</span><h3>1. Організаційний момент</h3>Налаштування на роботу.</div>
+<div class="tile"><span class="tag">5 хв</span><h3>2. Мотивація</h3>«Що спільного?» та «Впізнай модель».</div>
+<div class="tile"><span class="tag">15 хв</span><h3>3. Нові знання</h3>Моделі, типи, точність, абстрагування, гіпотеза і прогноз.</div>
+<div class="tile"><span class="tag">15 хв</span><h3>4. Дослідження</h3>Мініпроєкт «Розумний клас».</div>
+<div class="tile"><span class="tag">6 хв</span><h3>5. Закріплення</h3>Інтерактивний тест і гра.</div>
+<div class="tile"><span class="tag">3 хв</span><h3>6. Рефлексія</h3>Світлофор і домашнє завдання.</div>
+</div>
+</section>
+
+<section class="section" id="start">
+<h2>💡 1. Мотивація: що спільного?</h2>
+<p class="lead">Розгляньте чотири приклади. Усі вони представляють реальні об’єкти або явища, але роблять це по-різному.</p>
+<div class="grid">
+<div class="tile"><div class="visual"><svg viewBox="0 0 240 150" role="img" aria-label="Глобус"><circle cx="120" cy="66" r="49" fill="#8ac6e8" stroke="#2d719c" stroke-width="3"/><path d="M91 30l18 6 7 18-15 8-4 19-16-7-8-24zm44 8l18 7 6 19-13 9-4 22-18-7 3-21-9-13zm-18 47l20 4 12 15-17 14-17-10z" fill="#70ad74"/><ellipse cx="120" cy="66" rx="22" ry="49" fill="none" stroke="#fff" stroke-width="2"/><ellipse cx="120" cy="66" rx="49" ry="17" fill="none" stroke="#fff" stroke-width="2"/><path d="M95 119h50m-25-4v15" stroke="#795b3a" stroke-width="7" stroke-linecap="round"/></svg></div><h3>Глобус</h3><p>Матеріальна модель Землі.</p></div>
+<div class="tile"><div class="visual"><svg viewBox="0 0 240 150" role="img" aria-label="Макет будинку"><path d="M45 72L120 20l75 52" fill="#b96b4b" stroke="#7f4430" stroke-width="4"/><rect x="60" y="70" width="120" height="66" fill="#f3d9a4" stroke="#9b7950" stroke-width="3"/><rect x="108" y="94" width="35" height="42" fill="#8b6b4b"/><rect x="72" y="82" width="26" height="24" fill="#91c9e8"/><rect x="151" y="82" width="20" height="24" fill="#91c9e8"/></svg></div><h3>Макет будинку</h3><p>Відтворює форму й будову споруди.</p></div>
+<div class="tile"><div class="visual"><svg viewBox="0 0 240 150" role="img" aria-label="Карта погоди"><rect x="25" y="15" width="190" height="120" rx="12" fill="#dcecf8" stroke="#8ab2d0"/><circle cx="83" cy="61" r="20" fill="#f5c84c"/><g stroke="#f5c84c" stroke-width="4"><path d="M83 29v-9M83 92v-9M51 61h-9M124 61h-9M60 38l-7-7M106 84l-7-7M106 38l7-7"/></g><g fill="#fff" stroke="#94a9b8" stroke-width="2"><circle cx="150" cy="72" r="18"/><circle cx="170" cy="65" r="23"/><circle cx="190" cy="77" r="15"/><rect x="145" y="72" width="50" height="21" rx="10"/></g><path d="M155 101l-7 13m25-13l-7 13m25-13l-7 13" stroke="#4097d2" stroke-width="4"/></svg></div><h3>Карта погоди</h3><p>Графічне подання прогнозу.</p></div>
+<div class="tile"><div class="visual"><svg viewBox="0 0 240 150" role="img" aria-label="Цифрова модель будинку"><path d="M43 68L120 22l77 46-77 44z" fill="#9bc5e8" stroke="#386c9b" stroke-width="2"/><path d="M43 68v52l77 25v-53z" fill="#c3dff2" stroke="#386c9b" stroke-width="2"/><path d="M120 92v53l77-25V68z" fill="#6d9dc4" stroke="#386c9b" stroke-width="2"/><path d="M83 92l18 6v27l-18-6z" fill="#fff" stroke="#386c9b"/><path d="M142 95l25-8v25l-25 8z" fill="#d9efff" stroke="#386c9b"/></svg></div><h3>3D-модель</h3><p>Цифрове подання будівлі.</p></div>
+</div>
+<div class="question"><p>Запитання: навіщо створюють модель, якщо існує реальний об’єкт?</p><textarea id="warmAnswer" placeholder="Введіть свою думку…"></textarea><div class="actions"><button onclick="show('warmFeedback')">Показати орієнтир</button></div><div class="feedback" id="warmFeedback">Модель дає змогу досліджувати об’єкт, спрощувати складні властивості, перевіряти припущення та прогнозувати результати без обов’язкового втручання в реальність.</div></div>
+</section>
+
+<section class="section" id="theory">
+<h2>📘 2. Вивчаємо новий матеріал</h2>
+<h3>Що таке модель?</h3>
+<p><b>Модель</b> — спрощене подання реального об’єкта, процесу або явища, яке відображає істотні властивості для певної мети дослідження.</p>
+<p><b>Моделювання</b> — процес створення та дослідження моделей. Об’єкт, який досліджують, називають <b>оригіналом</b>.</p>
+<div class="flow"><div>Реальний об’єкт або явище</div><div class="arrow">↓</div><div>Визначення мети</div><div class="arrow">↓</div><div>Створення моделі</div><div class="arrow">↓</div><div>Дослідження моделі</div><div class="arrow">↓</div><div class="last">Аналіз результатів і висновок</div></div>
+<div class="callout"><b>Приклад.</b> Для рівномірного руху можна використати формулу <b>S = v · t</b>, де S — шлях, v — стала швидкість, t — час. Колір автомобіля в цій задачі не має значення.</div>
+
+<h3>Види моделей</h3>
+<div class="grid">
+<div class="tile"><div class="visual"><svg viewBox="0 0 200 130"><circle cx="100" cy="57" r="42" fill="#86c6e6" stroke="#337da5" stroke-width="3"/><path d="M78 25l15 7 5 15-14 9-2 17-16-9-5-19zm42 2l14 12-4 14-13 3-9-14zm-27 43l18-6 17 15-17 16-17-8z" fill="#6aa56c"/><path d="M70 105h60" stroke="#86633e" stroke-width="6" stroke-linecap="round"/></svg></div><h3>Матеріальні (фізичні)</h3><p>Реальні предмети, що відтворюють певні властивості оригіналу: глобус, макет, модель молекули.</p></div>
+<div class="tile"><div class="visual"><svg viewBox="0 0 200 130"><rect x="28" y="16" width="144" height="98" rx="4" fill="#fff" stroke="#6393b7" stroke-width="2"/><path d="M48 91V37h44v54zm44 0V58h58v33M48 48h44M107 68h30v23" fill="none" stroke="#337da5" stroke-width="3"/><path d="M38 103h124" stroke="#9ab5c9" stroke-width="2"/></svg></div><h3>Інформаційні</h3><p>Опис об’єкта за допомогою інформації: креслення, формули, таблиці, схеми, цифрові моделі.</p></div>
+</div>
+<h3>Типи інформаційних моделей</h3>
+<table><thead><tr><th>Тип</th><th>Приклад</th></tr></thead><tbody>
+<tr><td>Словесна</td><td>Опис будови комп’ютера</td></tr><tr><td>Графічна</td><td>Креслення, карта, малюнок</td></tr><tr><td>Математична</td><td>S = v · t</td></tr><tr><td>Структурна</td><td>Схема комп’ютерної мережі</td></tr><tr><td>Алгоритмічна</td><td>Послідовність дій для розв’язання задачі</td></tr><tr><td>Таблична</td><td>Таблиця результатів експерименту</td></tr><tr><td>Комп’ютерна</td><td>Цифрова 3D-модель будівлі</td></tr>
+</tbody></table>
+
+<h3>Візуалізація та наукове моделювання</h3>
+<p><b>Візуалізація</b> — подання інформації у формі, яку зручно сприймати зором: схема, графік, діаграма, анімація або 3D-модель.</p>
+<p><b>Наукове моделювання</b> — дослідження об’єктів і явищ за допомогою моделей для отримання знань, перевірки припущень та пояснення закономірностей.</p>
+<div class="callout">Візуалізація допомагає побачити структуру й закономірності, але сама по собі не гарантує точності моделі.</div>
+
+<h3>Точність моделі</h3>
+<p><b>Точність моделі</b> — ступінь відповідності моделі реальному об’єкту або явищу в межах визначеної мети. Вона залежить від даних, припущень, вимірювань і врахованих властивостей.</p>
+<div class="callout"><b>Запам’ятай:</b> модель має бути достатньо точною для поставленої задачі, а не обов’язково максимально деталізованою.</div>
+
+<h3>Абстрагування</h3>
+<p><b>Абстрагування</b> — зосередження на істотних для дослідження властивостях і відкидання несуттєвих.</p>
+<div class="tile"><b>Приклад: модель руху автомобіля</b><p>Враховуємо: швидкість, час, шлях.</p><p>Можемо не враховувати: колір, марку, кількість пасажирів — якщо вони не впливають на досліджувану залежність.</p><p><b>Подумайте:</b> чи важливий колір автомобіля, якщо досліджуємо нагрівання кузова на сонці?</p><button class="secondary" onclick="show('abstractAnswer')">Показати відповідь</button><div class="feedback" id="abstractAnswer">Так. Колір може впливати на поглинання сонячного випромінювання, тому в цій моделі він може бути істотною властивістю.</div></div>
+
+<h3>Гіпотеза та прогноз</h3>
+<div class="grid">
+<div class="tile"><span class="tag">Гіпотеза</span><p>Науково обґрунтоване припущення, яке потрібно перевірити.</p><i>«Якщо збільшити час освітлення рослини, її ріст може прискоритися».</i></div>
+<div class="tile"><span class="tag">Прогноз</span><p>Передбачення можливого результату на основі даних або моделі.</p><i>«За тиждень висота рослини може збільшитися на 2 см».</i></div>
+</div>
+<p><b>Наукове моделювання</b> допомагає досліджувати небезпечні, дорогі, дуже повільні, швидкі, великі або мікроскопічні явища. Результати моделі потрібно зіставляти з реальними даними.</p>
+</section>
+
+<section class="section" id="activity">
+<h2>🧪 3. Практична робота: мініпроєкт «Розумний клас»</h2>
+<div class="safetybox">
+<h3>⚠️ Правила техніки безпеки</h3>
+<ul>
+<li>Працюйте лише з обладнанням, яке дозволив використовувати вчитель.</li>
+<li>Перед початком роботи перевірте справність комп’ютера, проводів та інших пристроїв.</li>
+<li>Не торкайтеся оголених проводів, контактів і роз’ємів мокрими руками.</li>
+<li>Не під’єднуйте та не від’єднуйте електронні компоненти без дозволу вчителя.</li>
+<li>Не допускайте потрапляння води та інших рідин на комп’ютер і електронні пристрої.</li>
+<li>Під час роботи не залишайте робоче місце без дозволу та дотримуйтеся порядку.</li>
+<li>У разі несправності, запаху перегріву, іскріння або іншої небезпеки негайно припиніть роботу та повідомте вчителя.</li>
+<li>Після завершення роботи вимкніть обладнання та залиште робоче місце охайним.</li>
+</ul>
+</div>
+<p class="lead">Працюйте в командах по 3–4 учні. Створіть інформаційну модель системи, яка повідомляє, коли варто провітрити клас за показником CO₂.</p>
+<div class="callout"><b>Умова:</b> використайте навчальні умовні пороги. Це не універсальні нормативи якості повітря; реальні пороги визначають за відповідними рекомендаціями та умовами приміщення.</div>
+<table><thead><tr><th>Рівень CO₂</th><th>Дія системи</th></tr></thead><tbody><tr><td>Нижче 1000 ppm</td><td>«За обраним критерієм провітрювання не потрібне»</td></tr><tr><td>1000–1500 ppm</td><td>«Перевірте якість повітря, розгляньте провітрювання»</td></tr><tr><td>Понад 1500 ppm</td><td>«Потрібно провітрити приміщення»</td></tr></tbody></table>
+<h3>Інтерактивна модель датчика</h3>
+<label for="co2"><b>Перемістіть повзунок — змініть умовний показник CO₂:</b> <span id="co2value">800</span> ppm</label>
+<input id="co2" type="range" min="400" max="2500" step="50" value="800" style="width:100%;margin:15px 0" oninput="updateCO2()">
+<div class="tile"><h3 id="co2title">🟢 Стан: нижче навчального порога</h3><p id="co2text">За обраним критерієм провітрювання не потрібне.</p></div>
+<h3>Заповніть модель своєї команди</h3>
+<div class="formgrid">
+<div class="field"><label for="obj">Об’єкт моделювання</label><input id="obj" type="text" placeholder="Наприклад, повітря в кабінеті"></div>
+<div class="field"><label for="goal">Мета моделювання</label><input id="goal" type="text" placeholder="Що хочемо з’ясувати?"></div>
+<div class="field"><label for="hyp">Гіпотеза</label><textarea id="hyp" placeholder="Якщо…, то…"></textarea></div>
+<div class="field"><label for="pred">Прогноз</label><textarea id="pred" placeholder="Очікуємо, що…"></textarea></div>
+<div class="field"><label for="limits">Обмеження моделі</label><textarea id="limits" placeholder="Що модель не враховує?"></textarea></div>
+<div class="field"><label for="conclusion">Висновок</label><textarea id="conclusion" placeholder="Що показала модель?"></textarea></div>
+</div>
+<div class="actions no-print"><button onclick="showProject()">Переглянути підсумок</button><button class="secondary" onclick="window.print()">Друкувати / зберегти PDF</button><button class="secondary" onclick="clearProject()">Очистити</button></div>
+<div id="projectOutput" class="feedback"></div>
+<h3>Розподіл ролей</h3><div class="grid"><div class="tile"><b>Координатор</b><p>Організовує роботу й стежить за часом.</p></div><div class="tile"><b>Аналітик</b><p>Визначає істотні властивості та обмеження.</p></div><div class="tile"><b>Моделювальник</b><p>Створює схему або таблицю моделі.</p></div><div class="tile"><b>Доповідач</b><p>Презентує висновки команди.</p></div></div>
+</section>
+
+<section class="section" id="quiz">
+<h2>🎯 4. Інтерактивне закріплення</h2>
+<h3>Вправа 1. Гіпотеза чи прогноз?</h3>
+<p>Оберіть тип кожного твердження.</p>
+<div id="hpQuiz"></div>
+<div class="actions"><button onclick="checkHP()">Перевірити відповіді</button><button class="secondary" onclick="resetHP()">Скинути</button></div><div class="feedback" id="hpResult"></div>
+<h3>Вправа 2. Перевір себе: так чи ні</h3>
+<div id="tfQuiz"></div><div class="actions"><button onclick="checkTF()">Перевірити</button><button class="secondary" onclick="resetTF()">Скинути</button></div><div class="feedback" id="tfResult"></div>
+<h3>Вправа 3. Визнач тип моделі</h3>
+<div id="typeQuiz"></div><div class="actions"><button onclick="checkType()">Перевірити</button><button class="secondary" onclick="resetType()">Скинути</button></div><div class="feedback" id="typeResult"></div>
+</section>
+
+<section class="section" id="reflection">
+<h2>🚦 5. Рефлексія та самооцінювання</h2>
+<p>Оберіть колір, який відповідає вашому розумінню теми.</p>
+<div class="grid">
+<button style="background:#287d3c" onclick="setLight('green')">🟢 Зелений — усе зрозуміло</button>
+<button style="background:#a56b00" onclick="setLight('yellow')">🟡 Жовтий — є запитання</button>
+<button style="background:#b42318" onclick="setLight('red')">🔴 Червоний — потрібна допомога</button>
+</div><div class="feedback" id="lightFeedback"></div>
+<h3>Закінчи речення</h3>
+<div class="field"><label for="reflectionText">Сьогодні я зрозумів/зрозуміла, що…</label><textarea id="reflectionText" placeholder="Напишіть коротку рефлексію…"></textarea></div>
+<div class="actions"><button onclick="show('reflectionFeedback')">Завершити рефлексію</button></div><div class="feedback" id="reflectionFeedback">Дякую! Вашу відповідь можна озвучити або використати для самооцінювання.</div>
+</section>
+
+<section class="section" id="home">
+<h2>🏠 6. Домашнє завдання</h2>
+<div class="tile"><span class="tag">Обов’язкове</span><h3>«Модель навколо мене»</h3><p>Оберіть об’єкт або процес і опишіть його модель.</p>
+<div class="formgrid">
+<div class="field"><label>Об’єкт</label><input type="text" placeholder="Що моделюємо?"></div><div class="field"><label>Мета</label><input type="text" placeholder="Для чого потрібна модель?"></div><div class="field"><label>Тип моделі</label><select><option>Оберіть…</option><option>Матеріальна</option><option>Словесна</option><option>Графічна</option><option>Математична</option><option>Таблична</option><option>Комп’ютерна</option></select></div><div class="field"><label>Істотні властивості</label><textarea placeholder="Що важливо врахувати?"></textarea></div><div class="field"><label>Обмеження і точність</label><textarea placeholder="Що модель не враховує? Наскільки точною має бути?"></textarea></div><div class="field"><label>Гіпотеза і прогноз</label><textarea placeholder="Яке припущення перевірите? Який результат очікуєте?"></textarea></div>
+</div></div>
+<div class="tile" style="margin-top:14px"><span class="tag">Творче на вибір</span><h3>«Моя цифрова модель»</h3><p>Створіть графічну модель кімнати, блок-схему розумного пристрою, діаграму спостережень за погодою або просту 3D-модель у Tinkercad. Додайте мету, істотні властивості й обмеження.</p></div>
+</section>
+
+<section class="section">
+<h2>📌 Підсумок уроку</h2><div class="flow"><div>Модель: матеріальна або інформаційна</div><div class="arrow">↓</div><div>Дослідження: візуалізація та абстрагування</div><div class="arrow">↓</div><div>Науковий пошук: гіпотеза та перевірка</div><div class="arrow">↓</div><div class="last">Результат: прогноз, висновок, удосконалення моделі</div></div>
+<p><b>Головна думка:</b> модель — інструмент дослідження. Її корисність визначається тим, наскільки вона відповідає меті, а висновки потрібно перевіряти.</p>
+</section>
+</main>
+<footer>Інтерактивний навчальний матеріал · Інформатика, 9 клас · Тема «Моделі та моделювання»</footer>
+<script>
+function show(id){document.getElementById(id).classList.toggle('show')}
+function updateCO2(){let v=+document.getElementById('co2').value;document.getElementById('co2value').textContent=v;let t=document.getElementById('co2title'),p=document.getElementById('co2text');if(v<1000){t.textContent='🟢 Стан: нижче навчального порога';p.textContent='За обраним критерієм провітрювання не потрібне.'}else if(v<=1500){t.textContent='🟡 Стан: проміжний рівень';p.textContent='Перевірте якість повітря та розгляньте провітрювання.'}else{t.textContent='🔴 Стан: вище навчального порога';p.textContent='Модель рекомендує провітрити приміщення.'}}
+const hp=[['«Якщо збільшити час освітлення рослини, її ріст може прискоритися».','Гіпотеза'],['«За тиждень висота рослини може збільшитися на 2 см».','Прогноз'],['«Якщо температура води зростає, швидкість випаровування може збільшитися».','Гіпотеза'],['«За обраною моделлю завтра температура становитиме близько 18 °C».','Прогноз']];
+const tf=[['Модель завжди повністю відтворює реальний об’єкт.','Ні'],['Глобус є матеріальною моделлю Землі.','Так'],['Креслення будинку є інформаційною моделлю.','Так'],['Абстрагування допомагає виділити істотні властивості.','Так'],['Для одного об’єкта можна створити лише одну модель.','Ні'],['Гіпотеза не потребує перевірки.','Ні'],['Комп’ютерна модель може допомогти спрогнозувати результат.','Так']];
+const types=[['Глобус','Матеріальна'],['Креслення будинку','Графічна інформаційна'],['Формула S = v · t','Математична інформаційна'],['Таблиця вимірювань','Таблична інформаційна'],['3D-модель у програмі','Комп’ютерна інформаційна']];
+function build(id,data,kind){let root=document.getElementById(id);root.innerHTML='';data.forEach((q,i)=>{let d=document.createElement('div');d.className='question';let p=document.createElement('p');p.textContent=(i+1)+'. '+q[0];d.appendChild(p);let opts=kind==='hp'?['Гіпотеза','Прогноз']:kind==='tf'?['Так','Ні']:['Матеріальна','Графічна інформаційна','Математична інформаційна','Таблична інформаційна','Комп’ютерна інформаційна'];let box=document.createElement('div');box.className='options';opts.forEach(o=>{let l=document.createElement('label'),r=document.createElement('input');r.type='radio';r.name=kind+i;r.value=o;l.appendChild(r);l.append(' '+o);box.appendChild(l)});d.appendChild(box);root.appendChild(d)})}
+build('hpQuiz',hp,'hp');build('tfQuiz',tf,'tf');build('typeQuiz',types,'type');
+function check(kind,data,resultId){let n=0,answered=0;data.forEach((q,i)=>{let x=document.querySelector('input[name="'+kind+i+'"]:checked');if(x){answered++;if(x.value===q[1])n++}});let el=document.getElementById(resultId);el.textContent='Результат: '+n+' із '+data.length+'. Відповідей надано: '+answered+' із '+data.length+'.';el.classList.add('show');if(n===data.length)el.textContent+=' Чудово! Усі відповіді правильні.';else el.textContent+=' Перегляньте визначення й спробуйте ще раз.'}
+function checkHP(){check('hp',hp,'hpResult')}function checkTF(){check('tf',tf,'tfResult')}function checkType(){check('type',types,'typeResult')}
+function reset(kind,data,id){build(id,data,kind);let r=document.getElementById(kind+'Result');if(r)r.classList.remove('show')}
+function resetHP(){reset('hp',hp,'hpQuiz')}function resetTF(){reset('tf',tf,'tfQuiz')}function resetType(){reset('type',types,'typeQuiz')}
+function setLight(c){let e=document.getElementById('lightFeedback');e.textContent=c==='green'?'🟢 Ви почуваєтеся впевнено й можете застосувати знання.':c==='yellow'?'🟡 Позначте запитання, яке потрібно ще раз обговорити.':'🔴 Попросіть учителя пояснити складне поняття ще раз.';e.classList.add('show')}
+function showProject(){let fields=[['Об’єкт','obj'],['Мета','goal'],['Гіпотеза','hyp'],['Прогноз','pred'],['Обмеження','limits'],['Висновок','conclusion']];let out=fields.map(([n,id])=>'<p><b>'+n+':</b> '+(document.getElementById(id).value||'—').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))+'</p>').join('');let el=document.getElementById('projectOutput');el.innerHTML='<b>Підсумок роботи групи</b>'+out;el.classList.add('show')}
+function clearProject(){['obj','goal','hyp','pred','limits','conclusion'].forEach(id=>document.getElementById(id).value='');document.getElementById('projectOutput').classList.remove('show')}
+</script>
+</body></html>
