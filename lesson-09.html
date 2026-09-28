@@ -21,14 +21,8 @@ button,.btn{border:0;border-radius:10px;background:var(--blue);color:white;paddi
 input[type=text],textarea,select{width:100%;padding:10px 12px;border:1px solid #bccbd8;border-radius:9px;font:inherit;background:white}textarea{min-height:75px;resize:vertical}.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px}.field label{display:block;font-weight:650;margin-bottom:5px}
 .flow{display:grid;gap:8px;max-width:650px;margin:18px auto;text-align:center}.flow div{padding:13px;border-radius:10px;background:#eaf3fc;font-weight:700}.flow .last{background:#d7ebd8}.arrow{color:var(--blue);font-size:1.3rem;line-height:1}
 table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid var(--line);padding:10px;text-align:left;vertical-align:top}th{background:#eaf3fc;color:var(--blue)}
-.callout{padding:15px 17px;background:#fff3d9;border-left:5px solid #d49a22;border-radius:10px;margin:14px 0}.progresswrap{height:9px;background:#dfe8ef;border-radius:20px;overflow:hidden;margin:10px 0}.progress{height:100%;width:0;background:#3b9b66;transition:width .25s}
-.timer{font-variant-numeric:tabular-nums;font-size:1.8rem;font-weight:800;color:var(--blue)}
-.gradebox{margin-top:24px;padding:22px;border-radius:16px;background:linear-gradient(135deg,#eaf3fc,#f7fbff);border:2px solid #8bb7d8;text-align:center}
-.gradebox h3{margin:0 0 8px;color:var(--blue);font-size:1.5rem}
-.grade-number{font-size:3rem;font-weight:900;color:var(--blue);line-height:1.1;margin:8px 0}
-.grade-detail{font-size:1.05rem;color:var(--muted)}
-.gradebox .btn-grade{margin-top:12px;background:var(--green)}
-footer{text-align:center;color:var(--muted);padding:25px}
+.callout{padding:15px 17px;background:#fff3d9;border-left:5px solid #d49a22;border-radius:10px;margin:14px 0}.safetybox{padding:18px 20px;background:#fff8e8;border:2px solid #e1b34c;border-radius:14px;margin:14px 0}.safetybox h3{margin:0 0 10px;color:#8a5a00}.safetybox ul{margin:8px 0 0 20px;padding:0}.safetybox li{margin:5px 0}.progresswrap{height:9px;background:#dfe8ef;border-radius:20px;overflow:hidden;margin:10px 0}.progress{height:100%;width:0;background:#3b9b66;transition:width .25s}
+.timer{font-variant-numeric:tabular-nums;font-size:1.8rem;font-weight:800;color:var(--blue)}footer{text-align:center;color:var(--muted);padding:25px}
 @media print{nav,.no-print,button{display:none!important}body{background:white}.section{box-shadow:none;break-inside:avoid;margin:10px 0}header{background:#174a7e!important;print-color-adjust:exact}}
 </style>
 </head>
@@ -108,6 +102,19 @@ footer{text-align:center;color:var(--muted);padding:25px}
 
 <section class="section" id="activity">
 <h2>🧪 3. Практична робота: мініпроєкт «Розумний клас»</h2>
+<div class="safetybox">
+<h3>⚠️ Правила техніки безпеки</h3>
+<ul>
+<li>Працюйте лише з обладнанням, яке дозволив використовувати вчитель.</li>
+<li>Перед початком роботи перевірте справність комп’ютера, проводів та інших пристроїв.</li>
+<li>Не торкайтеся оголених проводів, контактів і роз’ємів мокрими руками.</li>
+<li>Не під’єднуйте та не від’єднуйте електронні компоненти без дозволу вчителя.</li>
+<li>Не допускайте потрапляння води та інших рідин на комп’ютер і електронні пристрої.</li>
+<li>Під час роботи не залишайте робоче місце без дозволу та дотримуйтеся порядку.</li>
+<li>У разі несправності, запаху перегріву, іскріння або іншої небезпеки негайно припиніть роботу та повідомте вчителя.</li>
+<li>Після завершення роботи вимкніть обладнання та залиште робоче місце охайним.</li>
+</ul>
+</div>
 <p class="lead">Працюйте в командах по 3–4 учні. Створіть інформаційну модель системи, яка повідомляє, коли варто провітрити клас за показником CO₂.</p>
 <div class="callout"><b>Умова:</b> використайте навчальні умовні пороги. Це не універсальні нормативи якості повітря; реальні пороги визначають за відповідними рекомендаціями та умовами приміщення.</div>
 <table><thead><tr><th>Рівень CO₂</th><th>Дія системи</th></tr></thead><tbody><tr><td>Нижче 1000 ppm</td><td>«За обраним критерієм провітрювання не потрібне»</td></tr><tr><td>1000–1500 ppm</td><td>«Перевірте якість повітря, розгляньте провітрювання»</td></tr><tr><td>Понад 1500 ppm</td><td>«Потрібно провітрити приміщення»</td></tr></tbody></table>
@@ -139,12 +146,6 @@ footer{text-align:center;color:var(--muted);padding:25px}
 <div id="tfQuiz"></div><div class="actions"><button onclick="checkTF()">Перевірити</button><button class="secondary" onclick="resetTF()">Скинути</button></div><div class="feedback" id="tfResult"></div>
 <h3>Вправа 3. Визнач тип моделі</h3>
 <div id="typeQuiz"></div><div class="actions"><button onclick="checkType()">Перевірити</button><button class="secondary" onclick="resetType()">Скинути</button></div><div class="feedback" id="typeResult"></div>
-
-<h3>Ваша оцінка</h3>
-<div class="gradebox" id="finalGrade">
-  <div class="grade-detail">Виконайте всі три вправи, а потім натисніть кнопку.</div>
-  <button class="btn-grade" onclick="calculateGrade()">Показати мою оцінку</button>
-</div>
 </section>
 
 <section class="section" id="reflection">
@@ -185,24 +186,6 @@ function build(id,data,kind){let root=document.getElementById(id);root.innerHTML
 build('hpQuiz',hp,'hp');build('tfQuiz',tf,'tf');build('typeQuiz',types,'type');
 function check(kind,data,resultId){let n=0,answered=0;data.forEach((q,i)=>{let x=document.querySelector('input[name="'+kind+i+'"]:checked');if(x){answered++;if(x.value===q[1])n++}});let el=document.getElementById(resultId);el.textContent='Результат: '+n+' із '+data.length+'. Відповідей надано: '+answered+' із '+data.length+'.';el.classList.add('show');if(n===data.length)el.textContent+=' Чудово! Усі відповіді правильні.';else el.textContent+=' Перегляньте визначення й спробуйте ще раз.'}
 function checkHP(){check('hp',hp,'hpResult')}function checkTF(){check('tf',tf,'tfResult')}function checkType(){check('type',types,'typeResult')}
-
-function calculateGrade(){
-  let total=0, max=hp.length+tf.length+types.length, answered=0;
-  [['hp',hp],['tf',tf],['type',types]].forEach(([kind,data])=>{
-    data.forEach((q,i)=>{
-      let x=document.querySelector('input[name="'+kind+i+'"]:checked');
-      if(x){answered++;if(x.value===q[1])total++}
-    });
-  });
-  let grade=Math.round(total/max*12);
-  if(grade<1) grade=1;
-  let message = grade>=10 ? 'Відмінний результат!' : grade>=7 ? 'Добрий результат! Перегляньте помилки та спробуйте ще раз.' : 'Опрацюйте матеріал ще раз і повторіть вправи.';
-  document.getElementById('finalGrade').innerHTML =
-    '<h3>Ваша оцінка: <span class="grade-number">'+grade+'</span> / 12</h3>'+
-    '<div class="grade-detail">Правильних відповідей: <b>'+total+' із '+max+'</b>. Надано відповідей: <b>'+answered+' із '+max+'</b>.</div>'+
-    '<div class="grade-detail" style="margin-top:6px">'+message+'</div>'+
-    '<button class="btn-grade" onclick="calculateGrade()">Оновити оцінку</button>';
-}
 function reset(kind,data,id){build(id,data,kind);let r=document.getElementById(kind+'Result');if(r)r.classList.remove('show')}
 function resetHP(){reset('hp',hp,'hpQuiz')}function resetTF(){reset('tf',tf,'tfQuiz')}function resetType(){reset('type',types,'typeQuiz')}
 function setLight(c){let e=document.getElementById('lightFeedback');e.textContent=c==='green'?'🟢 Ви почуваєтеся впевнено й можете застосувати знання.':c==='yellow'?'🟡 Позначте запитання, яке потрібно ще раз обговорити.':'🔴 Попросіть учителя пояснити складне поняття ще раз.';e.classList.add('show')}
