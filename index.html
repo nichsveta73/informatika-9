@@ -100,7 +100,7 @@ footer{text-align:center;color:var(--muted);padding:26px}
 <span class="section-number">Розділ 3</span>
 <div><h2>Впорядкування даних</h2><p>8 уроків у наданому плані</p></div>
 </div>
-<div class="lessons"><article class="lesson"><div class="lesson-num">18</div><div class="lesson-main"><div class="date">30.10.2026</div><h3>Поняття бази даних. Основні терміни (поле, запис, типи даних, ключі).</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">19</div><div class="lesson-main"><div class="date">03.11.2026</div><h3>Реляційна база даних. Визначення об’єктів предметної області</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">20</div><div class="lesson-main"><div class="date">06.11.2026</div><h3>Інтерфейс готової БД. Можливості та обмеження</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">21</div><div class="lesson-main"><div class="date">10.11.2026</div><h3>Створення та наповнення таблиць в базах даних. Практична робота № 5. «Створення та редагування таблиці бази даних»</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">22</div><div class="lesson-main"><div class="date">13.11.2026</div><h3>Форми для введення й перегляду даних. Технології No Code</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">23</div><div class="lesson-main"><div class="date">17.11.2026</div><h3>Сортування та фільтрація даних.</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">24</div><div class="lesson-main"><div class="date">20.11.2026</div><h3>Створення простих запитів. Основи SQL. Практична робота № 6 «Створення запитів на вибірку даних»</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">25</div><div class="lesson-main"><div class="date">24.11.2026</div><h3>Підсумковий проєкт: База даних на реальну тему.</h3></div><span class="lesson-pending">Матеріали готуються</span></article></div>
+<div class="lessons"><article class="lesson"><div class="lesson-num">18</div><div class="lesson-main"><div class="date">30.10.2026</div><h3>Поняття бази даних. Основні терміни (поле, запис, типи даних, ключі).</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">19</div><div class="lesson-main"><div class="date">03.11.2026</div><h3>Реляційна база даних. Визначення об’єктів предметної області</h3></div><a class="lesson-btn" href="urok_19.html" title="Відкрити матеріали уроку №19">Відкрити урок →</a></article><article class="lesson"><div class="lesson-num">20</div><div class="lesson-main"><div class="date">06.11.2026</div><h3>Інтерфейс готової БД. Можливості та обмеження</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">21</div><div class="lesson-main"><div class="date">10.11.2026</div><h3>Створення та наповнення таблиць в базах даних. Практична робота № 5. «Створення та редагування таблиці бази даних»</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">22</div><div class="lesson-main"><div class="date">13.11.2026</div><h3>Форми для введення й перегляду даних. Технології No Code</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">23</div><div class="lesson-main"><div class="date">17.11.2026</div><h3>Сортування та фільтрація даних.</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">24</div><div class="lesson-main"><div class="date">20.11.2026</div><h3>Створення простих запитів. Основи SQL. Практична робота № 6 «Створення запитів на вибірку даних»</h3></div><span class="lesson-pending">Матеріали готуються</span></article><article class="lesson"><div class="lesson-num">25</div><div class="lesson-main"><div class="date">24.11.2026</div><h3>Підсумковий проєкт: База даних на реальну тему.</h3></div><span class="lesson-pending">Матеріали готуються</span></article></div>
 </section>
 <section class="course-section" id="section-4">
 <div class="section-head">
@@ -115,5 +115,49 @@ footer{text-align:center;color:var(--muted);padding:26px}
 </section>
 </main>
 <footer>Інформатика 9 клас · Навчальний сайт 2026</footer>
+
+<script>
+// Check published lesson files without changing lesson content or numbering.
+(()=>{
+ let running=false;
+ async function lessonExists(url){
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),8000);
+  try{
+   let response=await fetch(url,{method:'HEAD',cache:'no-store',signal:controller.signal});
+   if(response.status===405||response.status===501)response=await fetch(url,{method:'GET',cache:'no-store',signal:controller.signal});
+   return response.ok && (response.headers.get('content-type')||'').toLowerCase().includes('text/html');
+  }catch{return null;}finally{clearTimeout(timer);}
+ }
+ async function updateLessons(){
+  if(running||!/^https?:$/.test(location.protocol))return;
+  running=true;
+  try{
+   const cards=[...document.querySelectorAll('.lesson')];let next=0;
+   async function worker(){
+    while(next<cards.length){
+     const card=cards[next++],number=card.querySelector('.lesson-num')?.textContent.trim();
+     if(!/^\d+$/.test(number))continue;
+     const filename='urok_'+number.padStart(2,'0')+'.html';
+     const exists=await lessonExists(new URL(filename,location.href));
+     if(exists===null)continue; // Preserve the current state after a network failure.
+     const current=card.querySelector('.lesson-btn, .lesson-pending');
+     if(exists){
+      if(current?.matches('a.lesson-btn')&&current.getAttribute('href')===filename)continue;
+      const link=document.createElement('a');link.className='lesson-btn';link.href=filename;
+      link.title='Відкрити матеріали уроку №'+number;link.textContent='Відкрити урок →';
+      if(current)current.replaceWith(link);else card.appendChild(link);
+     }else if(current?.matches('a.lesson-btn')){
+      const pending=document.createElement('span');pending.className='lesson-pending';pending.textContent='Матеріали готуються';current.replaceWith(pending);
+     }
+    }
+   }
+   await Promise.all(Array.from({length:4},()=>worker()));
+  }finally{running=false;}
+ }
+ window.addEventListener('pageshow',updateLessons);
+ window.addEventListener('online',updateLessons);
+})();
+</script>
 </body>
 </html>
