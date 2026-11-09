@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Урок №21 · Створення та наповнення таблиць БД · 9 клас</title>
+<style>
+:root{--blue:#174a7e;--ink:#203040;--muted:#566778;--line:#d7e2ed;--light:#edf5fc;--green:#17654d;--amber:#815609}*{box-sizing:border-box}body{margin:0;background:#f3f6fa;color:var(--ink);font:18px/1.65 system-ui,-apple-system,"Segoe UI",sans-serif}header{background:linear-gradient(120deg,#12385f,#2879ad);color:white;padding:45px 22px}header>div,main{max-width:1120px;margin:auto}h1{font-size:clamp(2rem,5vw,3.3rem);line-height:1.15}h2{color:var(--blue);font-size:1.65rem}h3{line-height:1.35}a{color:var(--blue)}header a{color:white}.tag{display:inline-block;border:1px solid #ffffff70;border-radius:25px;padding:5px 13px;margin:4px}nav{background:white;position:sticky;top:0;z-index:5;display:flex;gap:9px;overflow:auto;padding:10px;border-bottom:1px solid var(--line)}nav a{white-space:nowrap;text-decoration:none;font-weight:700;padding:5px 10px}main{padding:22px 16px 60px}section{background:white;border:1px solid var(--line);border-radius:20px;padding:24px;margin:22px 0;scroll-margin-top:85px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}.card,details{border:1px solid var(--line);border-radius:13px;padding:16px;margin:10px 0;background:#f9fcff}summary{cursor:pointer;color:var(--blue);font-weight:700}.callout{background:var(--light);border-left:5px solid #2879ad;padding:16px;border-radius:8px;margin:15px 0}.warm{background:#fff7e5;border-color:#dfa641}button,.download{font:inherit;border:0;border-radius:9px;background:var(--blue);color:white;padding:10px 16px;cursor:pointer;margin:6px 6px 6px 0}button:hover{background:#2879ad}button.secondary{background:#e7eef5;color:var(--blue)}button:disabled{opacity:.6;cursor:default}input,select,textarea{font:inherit;border:1px solid #9cb2c8;border-radius:7px;padding:9px;max-width:100%;background:white;color:var(--ink)}textarea{width:100%;min-height:90px}input[type=radio],input[type=checkbox]{width:20px;height:20px;vertical-align:middle}label{display:block;margin:8px 0}table{border-collapse:collapse;width:100%;font-size:1rem}th,td{border:1px solid var(--line);padding:10px;text-align:left}th{background:var(--light)}.scroll{overflow-x:auto}td input{width:100%;min-width:90px}.result{white-space:pre-line;font-weight:600;margin:12px 0;color:var(--green)}.error{color:#973422}.muted{color:var(--muted);font-size:.95rem}.timeline{font-size:.95rem}.number{color:var(--blue);font-weight:bold}.chips{display:flex;gap:10px;flex-wrap:wrap}.chip{background:var(--light);border:1px solid var(--line);border-radius:30px;padding:8px 16px}.question{border-bottom:1px solid var(--line);padding:14px 0}fieldset{border:0;padding:0;margin:0}legend{font-weight:700}.step{margin:15px 0} .selected{outline:3px solid #2879ad}.teacher{background:#fffaf0}footer{text-align:center;padding:25px;color:var(--muted)}:focus-visible{outline:3px solid #e29f12;outline-offset:3px}@media(max-width:600px){body{font-size:16px}section{padding:17px}th,td{padding:7px}}@media print{nav,button,.no-print{display:none}body{background:white;font-size:12pt}section{break-inside:avoid;border:1px solid #bbb}header{background:white;color:black}header a{color:black}input,textarea{border:1px solid #bbb}}
+.object-node{border:2px solid #b8cbdc;border-radius:16px;overflow:hidden;background:#f9fcff}.object-node h3{background:#174a7e;color:white;padding:15px;margin:0}.object-node ul{margin:12px 18px 18px;padding-left:24px}.branch{text-align:center;color:#174a7e;font-weight:700;padding-top:10px}.pk{background:#fff0b5!important;color:#564000!important;font-weight:700}.fk{background:#d5efff!important;color:#07496a!important;font-weight:700}.key-legend{display:inline-block;padding:6px 10px;border-radius:8px}.field-button{margin:0;background:transparent!important;color:#174a7e!important;text-decoration:underline;padding:5px;font-weight:700}#fieldDemo tbody tr{cursor:pointer}#fieldDemo td.demo-active,#fieldDemo th.demo-active{background:#d5efff;box-shadow:inset 0 0 0 2px #2879ad}.concepts>details{margin:18px 0} 
+.catalog-tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.catalog-tools input,.catalog-tools select{width:100%}.stats{display:flex;gap:15px;flex-wrap:wrap}.stats span{padding:10px;background:#edf5fc;border-radius:10px}.demo-btn{margin:4px;font-size:16px}.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}.form-grid input,.form-grid select{width:100%}#catalog tbody tr:hover{background:#edf5fc}.statusbar{background:#fff6d9;padding:12px;border-radius:10px}.diagram-box{border:2px solid #b8cbdc;padding:18px;border-radius:13px}.flow-label{text-align:center;color:#174a7e;font-weight:bold}#audit{max-height:180px;overflow:auto}.operation{font-weight:bold;color:#174a7e}
+
+.workpad{border:2px solid #abc6e2;border-radius:14px;padding:clamp(12px,3vw,24px);background:#f6faff}.workpad h3{margin-top:0}.workpad table td input{width:100%;min-width:7rem}.workpad select{min-width:8rem}.modebar{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0}.modebar [aria-pressed=true]{outline:3px solid #f1aa49;outline-offset:2px}.mode-panel[hidden]{display:none}.key-mark{color:#764400;font-weight:bold}.msg{padding:10px 14px;border-left:4px solid #3776a4;background:#eef7ff}.msg[data-error=true]{border-color:#a33538;background:#fff0f1;color:#832125}.msg:empty{display:none}.preview{max-width:100%;height:auto;border:1px solid #abc6e2;border-radius:10px}.score-grid label{padding:.4rem 0}.scenario th{min-width:7rem}td[scope=row]{font-weight:bold}#schemaGrid input[type=radio]{width:auto;min-width:0}.badge{font-weight:bold;color:#174a7e}.question fieldset{min-width:0}
+</style>
+</head>
+<body>
+<header><div><a href="index.html">← До головної сторінки</a><p>ІНФОРМАТИКА · 9 КЛАС · УРОК №21</p><h1>Створення та наповнення таблиць у базах даних</h1><p>Практична робота №5 «Створення та редагування таблиці бази даних»</p><span class="tag">⏱ 45 хв</span><span class="tag">🔑 Структура і первинний ключ</span><span class="tag">🗃 Шкільний буфет</span></div></header>
+<nav aria-label="Розділи уроку"><a href="#start">🎯 Цілі</a><a href="#motivation">💡 Виклик</a><a href="#learn">📚 Нове</a><a href="#research">🔎 Дослідження</a><a href="#practice">🛠 Практика</a><a href="#quiz">🧠 Тест</a><a href="#reflection">💬 Рефлексія</a></nav>
+<main>
+<section id="start"><h2>🎯 Сьогодні навчимося</h2>
+<div class="grid">
+<details open><summary>Планувати структуру</summary><p>Визначаю, про що буде таблиця, добираю зрозумілі назви полів і типи даних.</p></details>
+<details><summary>Призначати первинний ключ</summary><p>Пояснюю, як ПК однозначно визначає запис і чим зручна Автонумерація.</p></details>
+<details><summary>Наповнювати й редагувати таблицю</summary><p>Уводжу щонайменше п’ять записів, знаходжу потрібний за ID та змінюю його значення.</p></details>
+<details><summary>Перевіряти якість даних</summary><p>Розрізняю тип даних і правило перевірки. Пояснюю, навіщо перевіряти дані перед збереженням.</p></details>
+</div>
+<p><b>Орієнтири успіху.</b> Я можу створити таблицю з ПК, вибрати тип для кожного поля, додати п’ять товарів і відредагувати один запис.</p>
+<details class="teacher"><summary>🧑‍🏫 Методична карта</summary><p><b>Маршрут на 45 хв.</b> Цілі — 3 хв, мотивація — 4 хв, новий матеріал — 8 хв, дослідження — 5 хв, руханка — 2 хв, практична робота — 15 хв, тест — 6 хв, рефлексія — 2 хв.</p><p><b>Передумови.</b> Учні знають поняття поля, запису, первинного та зовнішнього ключів. Розвиваємо інформаційно-комунікаційну компетентність, математичне мислення через правила для цін і кількостей, уміння співпрацювати й пояснювати рішення.</p><p><b>Диференціація.</b> За потреби учень користується таблицею-зразком і кнопкою «Підказка зі структурою». Для ускладнення пояснює зв’язок між таблицями «Категорії» й «Товари» або порівнює копіювання з імпортом. У парі один учень працює з конструктором, інший перевіряє типи й ПК. На етапі редагування вони міняються ролями.</p><p><b>Формувальне оцінювання.</b> Спочатку учні прогнозують результат перевірки, потім пробують значення в тренажері та пояснюють повідомлення. Після практики звіряють результат із критеріями й зберігають звіт.</p></details></section>
+
+<section id="motivation"><h2>💡 Виклик «Чому залишок став від’ємним?»</h2>
+<p>У шкільному буфеті ведуть облік товарів. У клітинку «Ціна» записали «25 грн», у клітинку «Кількість» — −3. Назва «Сік яблучний» повторюється у двох рядках, але ці товари мають різний об’єм.</p>
+<label>Що потрібно продумати перед введенням даних?<textarea placeholder="Моя пропозиція…"></textarea></label>
+<details><summary>💡 Обговоріть і звірте ідеї</summary><p>Ціну зберігаємо як грошове значення, а кількість — як ціле число. Правило «кількість ≥ 0» відхиляє від’ємні залишки. Кожному запису надаємо власний ID. У назві або окремому полі можна уточнити об’єм.</p></details>
+</section>
+
+<section id="learn"><h2>📚 Вивчаємо нове</h2>
+<details open><summary>🗂 Від мети до структури</summary><p>Визнач, про які об’єкти збиратимеш дані. Назви таблицю і її поля. Для кожного поля обери тип, а для кожного запису передбач унікальний ідентифікатор. У таблиці про товари один рядок описує один товар.</p><div class="grid"><div class="card"><b>Поле</b><p>Стовпець з однією характеристикою. Наприклад, «Кількість».</p></div><div class="card"><b>Запис</b><p>Рядок, у якому зібрані значення про один товар.</p></div><div class="card"><b>Первинний ключ (ПК)</b><p>Поле або набір полів, значення яких однозначно визначають запис. У нашій таблиці ПК — поле ID. Автонумерація може формувати ID автоматично.</p></div></div></details>
+<details open><summary>🧭 Два режими роботи в Access</summary><div class="scroll"><table><thead><tr><th scope="col">Режим</th><th scope="col">Для чого використовуємо</th><th scope="col">Приклад дії</th></tr></thead><tbody><tr><td>Конструктор</td><td>Плануємо або змінюємо структуру</td><td>Визначаємо назви, типи, ПК і властивості полів.</td></tr><tr><td>Режим таблиці</td><td>Переглядаємо, додаємо й редагуємо записи</td><td>Змінюємо кількість товару в конкретному рядку.</td></tr></tbody></table></div><p>Таблицю також можна почати створювати безпосередньо в режимі таблиці. Якщо дані вже є у файлі, їх можна імпортувати. Імпорт переносить дані до БД. Пов’язана таблиця використовує дані із зовнішнього джерела.</p></details>
+<details open><summary>🔢 Який тип обрати?</summary>
+<div class="scroll"><table><thead><tr><th scope="col">Тип у Microsoft Access</th><th scope="col">Приклад</th><th scope="col">Чому підходить</th></tr></thead><tbody>
+<tr><td>Короткий текст</td><td>Назва, категорія, код «007»</td><td>Зберігає символи, зокрема нулі на початку коду.</td></tr>
+<tr><td>Число</td><td>Кількість 12</td><td>Дозволяє обчислювати. Для кількості використовуємо цілі значення.</td></tr>
+<tr><td>Грошова одиниця</td><td>Ціна 24,50 грн</td><td>Призначена для грошових сум. Валюту можна показати форматом поля.</td></tr>
+<tr><td>Дата й час</td><td>Дата надходження</td><td>Дозволяє впорядкувати записи за датами.</td></tr>
+<tr><td>Так/Ні</td><td>Доступний для продажу</td><td>Відповідає на запитання з двома можливими станами.</td></tr>
+<tr><td>Автонумерація</td><td>ID товару</td><td>Програма сама призначає значення. Після видалення записів у нумерації можливі пропуски.</td></tr></tbody></table></div>
+<p><b>Тип і правило перевірки.</b> Ціле число −3 відповідає числовому типу. Правило «≥ 0» не дозволяє зберегти його як залишок товару. Обов’язковість поля, значення за замовчуванням і формат відображення також задають у властивостях поля.</p></details>
+<details><summary>🧩 Додатково про OLE та зв’язки</summary><p>Поле «Об’єкт OLE» в Access може містити вбудований об’єкт, наприклад зображення або документ. Підручник описує його додавання через контекстне меню. Серед інших можливостей Access є поля для вкладень і гіперпосилань.</p><p>Якщо категорії зберігаються окремо, <b>Категорії.ID</b> є ПК, а <b>Товари.ID_категорії</b> — зовнішнім ключем. Одна категорія може відповідати багатьом товарам. Забезпечення цілісності даних не дозволяє послатися на категорію, якої немає.</p></details>
+<details><summary>🖥 Як повторити в Microsoft Access</summary><ol><li>Створи порожню БД. Вибери «Створити» → «Конструктор таблиць».</li><li>Уведи імена полів і типи. Для «Кількість» обери числовий тип із цілим розміром поля, для «Дата_надходження» — тип дати й часу.</li><li>Виділи «ID» з типом «Автонумерація» та признач його ключовим полем. Для ціни й кількості задай правила «&gt;0» та «&gt;=0» відповідно.</li><li>Збережи структуру під іменем «Товари». Відкрий режим таблиці, уведи записи та зміни потрібне значення.</li></ol><p>У браузерному тренажері дата вводиться без часу, а число для кількості має бути цілим. Тренажер моделює роботу з таблицею. Файл бази даних створюють у Microsoft Access.</p></details>
+</section>
+
+<section id="research"><h2>🔎 Дослідження «Тип чи правило?»</h2>
+<p>Спочатку зроби прогноз для кожної ситуації. Потім порівняй відповіді з поясненнями.</p>
+<div id="researchQuestions"></div><button type="button" id="researchCheck">Перевір себе</button><button type="button" class="secondary" id="researchClear">Очистити</button><div id="researchResult" class="msg" aria-live="polite"></div>
+<details><summary>🤸 Руханка «Поле чи запис?»</summary><p>Відійди від екрана. Почувши назву поля, покажи рукою вертикаль. Почувши опис товару з кількома значеннями, покажи горизонталь. Зразки для вчителя: «ціна», «сік, напої, 25 грн, 12 штук», «категорія», «булочка, випічка, 18 грн, 8 штук».</p></details>
+</section>
+
+<section id="practice"><h2>🛠 Практична робота №5 «Створення та редагування таблиці бази даних»</h2>
+<p><b>Місія.</b> Підготуй таблицю «Товари» для шкільного буфету. У тренажері можна одразу відкривати режими й вводити дані. Використовуй вигадані назви товарів.</p>
+<h3>🛡 Інструктаж із техніки безпеки</h3>
+<ul><li>Сядь зручно, тримай спину рівно й розташуй екран на комфортній відстані. За потреби збільш масштаб.</li><li>Працюй сухими руками, тримай напої подалі від техніки й не торкайся кабелів або розеток.</li><li>У разі несправності припини роботу й повідом учителя. За сигналом тривоги дій за правилами школи.</li><li>Уводь лише навчальні дані. Під час обговорення переведи погляд з екрана.</li></ul>
+<h3>🗺 План виконання · 15 хв</h3>
+<ol><li><b>3 хв.</b> У «Конструкторі» назви таблицю «Товари», добери типи семи полів і познач ID як ПК. Натисни «Застосувати структуру».</li><li><b>6 хв.</b> У «Режимі таблиці» додай п’ять різних товарів. Зразок нижче допоможе перевірити формат. Обери власні назви й значення або скористайся зразком за вказівкою вчителя.</li><li><b>3 хв.</b> Натисни «Редагувати» біля одного товару, зміни його кількість і збережи. Звір ID до й після зміни. Спробуй зберегти від’ємну кількість і прочитай повідомлення. Поверни коректне значення.</li><li><b>3 хв.</b> Натисни «Перевірити практичну», запиши висновок, оціни роботу й збережи PNG-звіт.</li></ol>
+<details><summary>🪜 Зразок заповнення та підказка</summary><div class="scroll"><table class="scenario"><thead><tr><th>Назва</th><th>Категорія</th><th>Ціна, грн</th><th>Кількість</th><th>Дата надходження</th><th>Доступний</th></tr></thead><tbody><tr><td>Сік яблучний 200 мл</td><td>Напої</td><td>25,50</td><td>12</td><td>06.11.2026</td><td>Так</td></tr><tr><td>Булочка з маком</td><td>Випічка</td><td>18,00</td><td>8</td><td>07.11.2026</td><td>Так</td></tr><tr><td>Вода негазована 500 мл</td><td>Напої</td><td>20,00</td><td>0</td><td>07.11.2026</td><td>Ні</td></tr><tr><td>Яблуко</td><td>Фрукти</td><td>12,00</td><td>15</td><td>08.11.2026</td><td>Так</td></tr><tr><td>Печиво вівсяне</td><td>Солодощі</td><td>16,00</td><td>6</td><td>08.11.2026</td><td>Так</td></tr></tbody></table></div><p>ID призначає Автонумерація. Щоб перевірити правило для кількості, спробуй значення −1 у тому самому полі. Звіт відображає збережені записи.</p></details>
+<div class="workpad" id="trainer">
+<h3>🧪 Тренажер «Товари шкільного буфету»</h3>
+<p>Початкова таблиця має поля ID і «Назва». У конструкторі можна додати решту полів, а в режимі таблиці — одразу почати вводити записи. Після перезавантаження сторінки робота починається заново. Перед закриттям збережи звіт.</p>
+<div class="modebar"><button type="button" id="modeDesign" aria-controls="designPanel" aria-pressed="true">🧱 Конструктор</button><button type="button" id="modeData" aria-controls="dataPanel" aria-pressed="false">🗃 Режим таблиці</button></div>
+<div id="designPanel" class="mode-panel">
+<label>Назва таблиці<input id="tableName" value="Товари" maxlength="40"></label>
+<p>Імена полів уже запропоновано. Обери типи й познач одне поле як ПК. Рядки з порожнім типом поки не входять у структуру.</p>
+<div class="scroll"><table id="schemaGrid"><thead><tr><th>Поле</th><th>Тип даних</th><th>ПК</th></tr></thead><tbody></tbody></table></div>
+<button type="button" id="applySchema">Застосувати структуру</button><button type="button" class="secondary" id="helpSchema">Підказка зі структурою</button><p id="designMsg" class="msg" role="status"></p>
+</div>
+<div id="dataPanel" class="mode-panel" hidden>
+<h4 id="entryTitle">Новий запис</h4><form id="entryForm" novalidate><div class="form-grid" id="entryFields"></div><button id="saveRecord" type="submit">Додати запис</button><button type="button" class="secondary" id="clearEntry">Очистити форму</button></form><p id="dataMsg" class="msg" role="status"></p>
+<div class="scroll"><table id="dataGrid"><caption id="dataCaption"></caption><thead></thead><tbody></tbody></table></div>
+</div>
+<button type="button" id="verifyPractice">Перевірити практичну</button><div id="practiceResult" class="msg" aria-live="polite"></div>
+</div>
+<label>Висновок. Чому зміна кількості не змінює ID?<textarea id="conclusion" maxlength="450" placeholder="ID ідентифікує запис, а кількість…"></textarea></label>
+<h3>📏 Критерії оцінювання практичної роботи · 12 балів</h3>
+<p>За кожним критерієм обери 0, 1 або 2 бали. 0 — завдання ще не виконано. 1 — виконано частково. 2 — виконано повністю.</p>
+<div id="rubric" class="score-grid"></div><button type="button" id="gradePractice">Порахувати самооцінювання</button><p id="selfResult" class="msg" role="status"></p>
+<button type="button" id="exportReport">💾 Зберегти звіт</button><p>Звіт у PNG містить структуру, збережені записи, висновок і самооцінку, якщо її заповнено.</p><p id="exportMsg" class="msg" role="status"></p><div id="reportPreview"></div>
+</section>
+<section id="quiz"><h2>🧠 Перевір себе · 12 запитань</h2><p>За кожну правильну відповідь — 1 бал. У запитанні з кількома відповідями потрібно вибрати всі правильні варіанти. Відповідай на всі запитання.</p><div id="quizList"></div><button type="button" id="gradeQuiz">Моя оцінка за тест</button><p id="quizScore" class="msg" role="status"></p><details><summary>Пояснення після перевірки</summary><ol id="quizFeedback"></ol></details><h3>🎯 Моя оцінка за урок</h3><p>60% бала за практичну роботу + 40% бала за тест. Результат округлюється до цілого. Практичний бал для розрахунку береться із самооцінювання.</p><button type="button" id="gradeLesson">Моя оцінка за урок</button><p id="lessonScore" class="msg" role="status"></p></section>
+<section id="reflection"><h2>💬 Рефлексія «Рядок, який я можу пояснити»</h2><div class="chips"><button type="button" data-stem="Я можу пояснити, як обрати тип поля… ">🟢 Можу пояснити</button><button type="button" data-stem="Мені вдалося створити запис, а ще хочу потренувати… ">🟡 Потрібна практика</button><button type="button" data-stem="Під час роботи мені потрібна допомога з… ">🔴 Потрібна допомога</button></div><label>Моя репліка<textarea id="reflectionText"></textarea></label><h3>🏠 Домашнє завдання</h3><p>Опрацюй тему 14, с. 36–45. Запропонуй структуру таблиці «Настільні_ігри» із п’ятьма полями різних типів. Познач ПК і наведи два приклади записів. За бажанням спроєктуй окрему таблицю категорій та вкажи ЗК.</p></section>
+<section><h2>📖 Джерело</h2><p>І. В. Тріщук, О. Ю. Лазарець. «Інформатика. 9 клас», 2026. Тема 14, с. 36–45. Практичну роботу №5 підготовлено за календарним планом. Сюжет «Шкільний буфет» адаптовано з практичної роботи №14 підручника.</p><a href="https://bohdan-books.com/upload/data_files/tmp_catalog/978-966-10-9224-1_inform-9kl.pdf">Електронне видання підручника</a></section>
+</main><footer>Інформатика · 9 клас · Урок №21</footer>
+<script>
+'use strict';
+const $ = id => document.getElementById(id);
+const types = {auto:'Автонумерація', text:'Короткий текст', number:'Число (ціле)', money:'Грошова одиниця', date:'Дата', bool:'Так/Ні'};
+const fieldNames = ['ID','Назва','Категорія','Ціна','Кількість','Дата_надходження','Доступний'];
+const targetTypes = ['auto','text','text','money','number','date','bool'];
+let fields = [{slot:0,name:'ID',type:'auto',key:true},{slot:1,name:'Назва',type:'text',key:false}];
+let tableName = 'Товари', records = [], nextId = 1, editing = null;
+let editedQuantity = false, rejectedQuantity = false, testScore = null, reportUrl = null;
+const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+
+function message(id, text, error = false) {
+  $(id).textContent = text;
+  $(id).dataset.error = String(error);
+}
+
+function mode(dataMode) {
+  $('designPanel').hidden = dataMode;
+  $('dataPanel').hidden = !dataMode;
+  $('modeDesign').setAttribute('aria-pressed', String(!dataMode));
+  $('modeData').setAttribute('aria-pressed', String(dataMode));
+}
+
+function buildSchema() {
+  $('schemaGrid').tBodies[0].innerHTML = fieldNames.map((name, slot) => {
+    const options = Object.entries(types).map(([value,label]) => '<option value="'+value+'">'+label+'</option>').join('');
+    return '<tr><td><input id="fieldName'+slot+'" aria-label="Назва поля '+(slot+1)+'" maxlength="40" value="'+name+'"></td><td><select id="fieldType'+slot+'" aria-label="Тип поля '+name+'"><option value="">Обери тип</option>'+options+'</select></td><td><input type="radio" id="key'+slot+'" name="primary" aria-label="Позначити поле '+name+' як ПК"></td></tr>';
+  }).join('');
+  $('fieldType0').value = 'auto';
+  $('fieldType1').value = 'text';
+  $('key0').checked = true;
+}
+
+function decode(field, raw, uid) {
+  if (field.type === 'auto') return {value:uid};
+  const text = String(raw ?? '').trim();
+  const invalid = reason => ({error:field.name+' — '+reason});
+  if (!text) return invalid('заповни поле.');
+  if (field.type === 'text') return text.length <= 255 ? {value:text} : invalid('уведи до 255 символів.');
+  if (field.type === 'date') {
+    const date = new Date(text+'T00:00:00Z');
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(text) || !Number.isFinite(date.getTime()) || date.toISOString().slice(0,10) !== text) return invalid('обери коректну дату.');
+    return {value:text};
+  }
+  if (field.type === 'bool') return ['Так','Ні'].includes(text) ? {value:text} : invalid('обери «Так» або «Ні».');
+  if (field.type === 'number') {
+    if (!/^-?\d+$/.test(text) || !Number.isSafeInteger(Number(text))) return invalid('уведи ціле число.');
+    if (field.slot === 4 && Number(text) < 0) return invalid('кількість має бути не меншою за 0.');
+    return {value:Number(text)};
+  }
+  if (!/^-?\d+(?:[.,]\d{1,2})?$/.test(text)) return invalid('уведи суму числом із максимум двома десятковими знаками.');
+  const value = Number(text.replace(',','.'));
+  if (!Number.isSafeInteger(Math.round(value*100))) return invalid('уведи меншу суму.');
+  if (field.slot === 3 && value <= 0) return invalid('ціна має бути більшою за 0.');
+  return {value};
+}
+
+function applySchema() {
+  const name = $('tableName').value.trim();
+  const draft = fieldNames.map((_,slot) => ({
+    slot, name:$('fieldName'+slot).value.trim(), type:$('fieldType'+slot).value, key:$('key'+slot).checked
+  })).filter(field => field.type);
+  if (!name || !draft.length || draft.some(field => !field.name)) {
+    message('designMsg','Укажи назву таблиці й назви всіх полів, для яких обрано тип.',true);
+    return;
+  }
+  if (new Set(draft.map(field => field.name.toLocaleLowerCase('uk'))).size !== draft.length) {
+    message('designMsg','Назви полів мають бути різними.',true);
+    return;
+  }
+  const key = draft.find(field => field.key);
+  if (!key || draft.filter(field => field.type === 'auto').length > 1) {
+    message('designMsg','Познач ПК серед полів з обраним типом. Автонумерацію можна обрати лише для одного поля.',true);
+    return;
+  }
+  if (records.some(record => fields.some(field => !draft.some(item => item.slot === field.slot) && record.values[field.slot] !== ''))) {
+    message('designMsg','У вилученому полі є збережені значення. Поверни його тип і повтори.',true);
+    return;
+  }
+  const updated = [];
+  const keys = new Set();
+  for (const record of records) {
+    const values = {};
+    for (const field of draft) {
+      const raw = record.values[field.slot] ?? '';
+      if (raw === '' && field.type !== 'auto' && !field.key) {
+        values[field.slot] = '';
+        continue;
+      }
+      const result = decode(field,raw,record.uid);
+      if (result.error) {
+        message('designMsg','Запис №'+record.uid+'. '+result.error,true);
+        return;
+      }
+      values[field.slot] = result.value;
+    }
+    if (keys.has(values[key.slot])) {
+      message('designMsg','Обраний ПК повторюється у збережених записах.',true);
+      return;
+    }
+    keys.add(values[key.slot]);
+    updated.push({uid:record.uid,values});
+  }
+  fields = draft;
+  records = updated;
+  tableName = name;
+  resetEntry();
+  renderRecords();
+  message('designMsg','Структуру застосовано. Полів: '+fields.length+'. ПК: '+key.name+'.');
+  message('dataMsg','Структуру застосовано. Заповни поля, щоб додати або оновити запис.');
+  message('practiceResult','');
+  mode(true);
+}
+
+function displayValue(field,value) {
+  if (value === '' || value == null) return '—';
+  if (field.type === 'money') return Number(value).toLocaleString('uk-UA',{minimumFractionDigits:2,maximumFractionDigits:2});
+  if (field.type === 'date') return value.split('-').reverse().join('.');
+  return String(value);
+}
+
+function resetEntry(record = null) {
+  editing = record?.uid ?? null;
+  $('entryTitle').textContent = record ? 'Редагування запису' : 'Новий запис';
+  $('saveRecord').textContent = record ? 'Зберегти зміни' : 'Додати запис';
+  $('entryFields').innerHTML = fields.map(field => {
+    const id = 'entry'+field.slot;
+    const raw = record?.values[field.slot] ?? '';
+    const label = escapeHtml(field.name)+' · '+types[field.type]+(field.key?' · ПК':'');
+    let control;
+    if (field.type === 'bool') {
+      control = '<select id="'+id+'"><option value="">Обери</option>'+['Так','Ні'].map(item => '<option'+(raw===item?' selected':'')+'>'+item+'</option>').join('')+'</select>';
+    } else {
+      const inputType = field.type==='date'?'date':'text';
+      const inputMode = field.type==='number'?' inputmode="numeric"':field.type==='money'?' inputmode="decimal"':'';
+      const attribute = field.type==='auto'?' readonly':'';
+      const value = field.type==='auto'?(record?.uid ?? nextId):raw;
+      control = '<input id="'+id+'" type="'+inputType+'"'+inputMode+attribute+' value="'+escapeHtml(value)+'" maxlength="255">';
+    }
+    return '<label>'+label+control+'</label>';
+  }).join('');
+}
+
+function renderRecords() {
+  $('dataCaption').textContent = tableName+' · Записів: '+records.length;
+  const grid = $('dataGrid');
+  grid.tHead.innerHTML = '<tr>'+fields.map(field=>'<th scope="col">'+escapeHtml(field.name)+(field.key?' <span class="key-mark">🔑 ПК</span>':'')+'</th>').join('')+'<th scope="col">Дія</th></tr>';
+  grid.tBodies[0].innerHTML = records.map(record => '<tr>'+fields.map(field=>'<td>'+escapeHtml(displayValue(field,record.values[field.slot]))+'</td>').join('')+'<td><button type="button" class="secondary" data-edit="'+record.uid+'">Редагувати</button></td></tr>').join('') || '<tr><td colspan="'+(fields.length+1)+'">Тут з’являться додані записи.</td></tr>';
+}
+
+function saveRecord(event) {
+  event.preventDefault();
+  const uid = editing ?? nextId;
+  const values = {};
+  for (const field of fields) {
+    const input = $('entry'+field.slot);
+    const result = decode(field,input.value,uid);
+    if (result.error) {
+      if (field.slot===4 && field.type==='number' && /^-\d+$/.test(input.value.trim()) && Number(input.value)<0) rejectedQuantity = true;
+      message('dataMsg',result.error,true);
+      message('practiceResult','');
+      input.focus();
+      return;
+    }
+    values[field.slot] = result.value;
+  }
+  const key = fields.find(field=>field.key);
+  if (records.some(record => record.uid!==uid && record.values[key.slot]===values[key.slot])) {
+    message('dataMsg','Значення ПК вже існує. Укажи унікальне значення.',true);
+    $('entry'+key.slot).focus();
+    return;
+  }
+  const old = records.find(record=>record.uid===uid);
+  const record = {uid,values};
+  if (old) {
+    if (fields.some(field=>field.slot===4 && field.type==='number') && old.values[4]!=='' && old.values[4]!==values[4]) editedQuantity = true;
+    records = records.map(item=>item.uid===uid?record:item);
+  } else {
+    records.push(record);
+    nextId++;
+  }
+  resetEntry();
+  renderRecords();
+  message('practiceResult','');
+  message('dataMsg',(old?'Зміни збережено. ':'Запис додано. ')+key.name+' = '+values[key.slot]+'.');
+}
+
+function verifyPractice() {
+  const structureOK = tableName.toLocaleLowerCase('uk')==='товари' && fields.length===fieldNames.length &&
+    fields.every(field=>field.name.toLocaleLowerCase('uk')===fieldNames[field.slot].toLocaleLowerCase('uk') && field.type===targetTypes[field.slot] && field.key===(field.slot===0));
+  const complete = records.filter(record=>fields.every(field=>record.values[field.slot]!=='' && record.values[field.slot]!=null)).length;
+  const checks = [
+    [structureOK,'Таблиця «Товари» має 7 потрібних полів, правильні типи й ПК ID.','Звір назву, усі 7 полів, типи та ПК ID.'],
+    [complete>=5,'Заповнено '+complete+' записів.','Потрібно щонайменше 5 повних записів. Зараз повних: '+complete+'.'],
+    [editedQuantity,'Зміну кількості у збереженому записі виконано.','Відредагуй кількість одного з доданих товарів і збережи зміни.'],
+    [rejectedQuantity,'Від’ємну кількість перевірено.','Спробуй зберегти від’ємну кількість і прочитай повідомлення.']
+  ];
+  $('practiceResult').replaceChildren(...checks.map(([ok,yes,no])=>{
+    const p = document.createElement('p');
+    p.textContent = (ok?'✓ ':'○ ')+(ok?yes:no);
+    return p;
+  }));
+}
+
+const investigations = [
+  ['Код товару «007». Який тип збереже два нулі на початку?',['Короткий текст','Число','Так/Ні'],0,'Код має виглядати саме як «007», тому зберігаємо його як текст.'],
+  ['Чи підходить −3 за типом для поля «Кількість» і що зробить правило ≥ 0?',['Тип і правило приймуть значення','Числовий тип прийме, правило відхилить','Текстове поле автоматично виправить значення'],1,'−3 є цілим числом, але не задовольняє правило ≥ 0.'],
+  ['Потрібно змінити тип поля «Ціна». Який режим відкрити?',['Режим таблиці','Попередній перегляд звіту','Конструктор'],2,'Тип є частиною структури, тому його змінюють у конструкторі.'],
+  ['Два товари мають однакову назву. Що дозволить розрізнити записи?',['Однакова категорія','Унікальні значення ПК','Колір рядка'],1,'Первинний ключ однозначно визначає запис.']
+];
+$('researchQuestions').innerHTML = investigations.map(([question,options],i)=>'<label>'+(i+1)+'. '+question+'<select id="research'+i+'"><option value="">Обери відповідь</option>'+options.map((option,j)=>'<option value="'+j+'">'+option+'</option>').join('')+'</select></label>').join('');
+$('researchCheck').addEventListener('click',()=>{
+  $('researchResult').replaceChildren(...investigations.map(([, ,key,explanation],i)=>{
+    const p = document.createElement('p');
+    p.textContent = (i+1)+'. '+($('research'+i).value===String(key)?'✓ ':'○ ')+explanation;
+    return p;
+  }));
+});
+$('researchClear').addEventListener('click',()=>{
+  investigations.forEach((_,i)=>$('research'+i).value='');
+  message('researchResult','');
+});
+
+const criteria = [
+  'Умію назвати таблицю й створити всі сім полів.',
+  'Обираю правильні типи й позначаю ID як ПК.',
+  'Додаю щонайменше п’ять повних записів.',
+  'Змінюю кількість товару й перевіряю, що ID збережено.',
+  'Перевіряю від’ємну кількість і пояснюю правило.',
+  'Записую висновок і зберігаю звіт.'
+];
+$('rubric').innerHTML = criteria.map((criterion,i)=>'<label>'+(i+1)+'. '+criterion+' <select class="criterion" aria-label="Бал за критерій '+(i+1)+'"><option value="">Обери бал</option><option value="0">0</option><option value="1">1</option><option value="2">2</option></select></label>').join('');
+function practiceScore() {
+  const values = Array.from(document.querySelectorAll('.criterion'),select=>select.value);
+  return values.includes('') ? null : values.reduce((sum,value)=>sum+Number(value),0);
+}
+$('gradePractice').addEventListener('click',()=>{
+  const score = practiceScore();
+  message('selfResult',score===null?'Заповни всі шість критеріїв.':'Моя самооцінка за практичну роботу: '+score+' із 12.',score===null);
+});
+$('rubric').addEventListener('change',()=>{
+  message('selfResult','');
+  message('lessonScore','');
+});
+
+const quiz = [
+  ['Що таке поле таблиці?',['Рядок про об’єкт','Стовпець з однією характеристикою','Назва файлу'],[1],'Поле відповідає одній характеристиці.'],
+  ['Що описує один запис?',['Один об’єкт із його значеннями','Лише заголовок таблиці','Усі об’єкти БД'],[0],'Запис об’єднує значення полів одного об’єкта.'],
+  ['Яка вимога до значень ПК?',['Можуть бути однаковими','Можуть бути порожніми','Унікальні й непорожні'],[2],'ПК однозначно визначає запис.'],
+  ['Де визначають типи полів і призначають ПК?',['У конструкторі','У звіті','У фільтрі'],[0],'Ці дії змінюють структуру.'],
+  ['Який режим зручний для редагування кількості в рядку?',['Конструктор','Режим таблиці','Режим друку'],[1],'У режимі таблиці працюють із записами.'],
+  ['Який тип підходить для коду «007»?',['Автонумерація','Грошова одиниця','Короткий текст'],[2],'Текст збереже початкові нулі.'],
+  ['Що робить Автонумерація?',['Призначає ідентифікатор автоматично','Додає назву товару','Обчислює суму цін'],[0],'Автонумерація генерує значення поля.'],
+  ['Обери дві дії зі структурою таблиці.',['Змінити кількість у записі','Додати нове поле','Вибрати тип поля','Знайти товар за ID'],[1,2],'Поля та їхні типи належать до структури.'],
+  ['Який тип доречний для поля «Доступний»?',['Так/Ні','Дата й час','Грошова одиниця'],[0],'Поле має два можливі стани.'],
+  ['Що станеться з цілим числом −1 за правила кількості ≥ 0?',['Буде збережено','Правило відхилить значення','Стане датою'],[1],'Значення має відповідати і типу, і правилу.'],
+  ['Яке поле посилається на ПК таблиці «Категорії»?',['Назва товару','Ціна товару','ЗК ID_категорії у таблиці «Товари»'],[2],'Зовнішній ключ посилається на ключ іншої таблиці.'],
+  ['У таблиці п’ять записів. Додали ще один, потім змінили ціну в одному записі. Скільки записів стало?',[],['6'],'Додавання збільшило кількість записів на один. Редагування ціни її не змінює.']
+];
+$('quizList').innerHTML = quiz.map(([question,options,key],i)=>{
+  const type = key.length>1?'checkbox':'radio';
+  const controls = options.length ? options.map((option,j)=>'<label><input name="q'+i+'" type="'+type+'" value="'+j+'"> '+option+'</label>').join('') : '<label>Відповідь числом<input id="quizNumber" inputmode="numeric" autocomplete="off"></label>';
+  return '<div class="question"><fieldset><legend>'+(i+1)+'. '+question+'</legend>'+controls+'</fieldset></div>';
+}).join('');
+$('gradeQuiz').addEventListener('click',()=>{
+  const answers = quiz.map(([,options],i)=>options.length ? Array.from(document.querySelectorAll('[name="q'+i+'"]:checked'),input=>input.value) : [$('quizNumber').value.trim()].filter(Boolean));
+  const missing = answers.flatMap((answer,i)=>answer.length?[]:[i+1]);
+  if (missing.length) {
+    message('quizScore','Дай відповіді на запитання '+missing.join(', ')+'.',true);
+    return;
+  }
+  const results = quiz.map(([, ,key],i)=>String(answers[i])===String(key));
+  const count = results.filter(Boolean).length;
+  testScore = Math.max(1,count);
+  message('quizScore','Правильних відповідей: '+count+' із 12. Оцінка: '+testScore+' із 12.');
+  $('quizFeedback').replaceChildren(...quiz.map(([, , ,explanation],i)=>{
+    const li = document.createElement('li');
+    li.textContent = (results[i]?'✓ ':'○ ')+explanation;
+    return li;
+  }));
+});
+$('quizList').addEventListener('input',()=>{
+  testScore = null;
+  message('quizScore','');
+  message('lessonScore','');
+  $('quizFeedback').replaceChildren();
+});
+$('gradeLesson').addEventListener('click',()=>{
+  const practical = practiceScore();
+  if (practical===null || testScore===null) {
+    message('lessonScore','Заповни самооцінювання практичної роботи й перевір тест.',true);
+    return;
+  }
+  message('lessonScore','Оцінка за урок: '+Math.max(1,Math.round(practical*0.6+testScore*0.4))+' із 12.');
+});
+document.querySelectorAll('[data-stem]').forEach(button=>button.addEventListener('click',()=>{
+  $('reflectionText').value = button.dataset.stem;
+  $('reflectionText').focus();
+}));
+
+function exportReport() {
+  if (!records.length) {
+    message('exportMsg','Додай хоча б один запис, щоб сформувати звіт.',true);
+    return;
+  }
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  if (!context) {
+    message('exportMsg','Браузер не зміг створити зображення звіту.',true);
+    return;
+  }
+  const width = 1440, margin = 48, bodyWidth = width-2*margin, font = '21px Arial, sans-serif';
+  const entries = [];
+  function wrap(value, maxWidth) {
+    const lines = [];
+    let line = '';
+    for (const char of String(value)) {
+      if (char==='\n') {lines.push(line);line='';continue;}
+      if (line && context.measureText(line+char).width>maxWidth) {lines.push(line);line='';}
+      line += char;
+    }
+    return [...lines,line];
+  }
+  function addText(value,bold=false) {
+    context.font = bold?'bold '+font:font;
+    const lines = wrap(value,bodyWidth);
+    entries.push({cells:[lines],widths:[bodyWidth],height:lines.length*29+18,bold});
+  }
+  function addTable(rows,widths) {
+    rows.forEach((row,i)=>{
+      context.font = i===0?'bold '+font:font;
+      const cells = row.map((value,j)=>wrap(value,widths[j]-24));
+      entries.push({cells,widths,height:Math.max(...cells.map(lines=>lines.length))*29+18,bold:i===0,grid:true});
+    });
+  }
+  addText('Практична робота №5 · Створення та редагування таблиці БД',true);
+  addText('Таблиця «'+tableName+'» · Записів: '+records.length);
+  addText('Структура',true);
+  addTable([['Поле','Тип даних','Ключ'],...fields.map(field=>[field.name,types[field.type],field.key?'ПК':'—'])],[510,570,264]);
+  addText('Збережені записи',true);
+  addTable([fields.map(field=>field.name+(field.key?' (ПК)':'')),...records.map(record=>fields.map(field=>displayValue(field,record.values[field.slot])))],fields.map(()=>bodyWidth/fields.length));
+  addText('Висновок. '+($('conclusion').value.trim()||'—'));
+  addText('Самооцінка за практичну роботу: '+(practiceScore()??'не заповнено')+' із 12.');
+  canvas.width = width;
+  canvas.height = 2*margin+entries.reduce((sum,entry)=>sum+entry.height,0);
+  context.fillStyle = '#ffffff';
+  context.fillRect(0,0,width,canvas.height);
+  let y = margin;
+  for (const entry of entries) {
+    let x = margin;
+    entry.cells.forEach((lines,i)=>{
+      if (entry.grid) {
+        context.fillStyle = entry.bold?'#e9f3ff':'#ffffff';
+        context.fillRect(x,y,entry.widths[i],entry.height);
+        context.strokeStyle = '#a9bfd5';
+        context.strokeRect(x,y,entry.widths[i],entry.height);
+      }
+      context.font = entry.bold?'bold '+font:font;
+      context.fillStyle = entry.bold?'#174a7e':'#20374e';
+      lines.forEach((line,j)=>context.fillText(line,x+(entry.grid?12:0),y+29+j*29));
+      x += entry.widths[i];
+    });
+    y += entry.height;
+  }
+  canvas.toBlob(blob=>{
+    if (!blob) {
+      message('exportMsg','Не вдалося створити PNG.',true);
+      return;
+    }
+    if (reportUrl) URL.revokeObjectURL(reportUrl);
+    reportUrl = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = reportUrl;
+    link.download = 'urok21-praktychna5.png';
+    link.textContent = 'Завантажити PNG ще раз';
+    const preview = document.createElement('img');
+    preview.src = reportUrl;
+    preview.className = 'preview';
+    preview.alt = 'PNG-звіт практичної роботи №5';
+    $('reportPreview').replaceChildren(link,document.createElement('br'),preview);
+    link.click();
+    message('exportMsg','Звіт готовий. За потреби скористайся посиланням під кнопкою.');
+  },'image/png');
+}
+
+buildSchema();
+resetEntry();
+renderRecords();
+$('modeDesign').addEventListener('click',()=>mode(false));
+$('modeData').addEventListener('click',()=>mode(true));
+$('applySchema').addEventListener('click',applySchema);
+$('helpSchema').addEventListener('click',()=>{
+  $('tableName').value = 'Товари';
+  fieldNames.forEach((name,slot)=>{
+    $('fieldName'+slot).value = name;
+    $('fieldType'+slot).value = targetTypes[slot];
+  });
+  $('key0').checked = true;
+  message('designMsg','Порівняй типи та ПК із завданням. Потім застосуй структуру.');
+});
+$('entryForm').addEventListener('submit',saveRecord);
+$('clearEntry').addEventListener('click',()=>{
+  resetEntry();
+  message('dataMsg','');
+});
+$('dataGrid').addEventListener('click',event=>{
+  const button = event.target.closest('button[data-edit]');
+  if (!button) return;
+  resetEntry(records.find(record=>record.uid===Number(button.dataset.edit)));
+  $('entryFields').querySelector('input:not([readonly]), select')?.focus();
+  message('dataMsg','Зміни потрібні значення та натисни «Зберегти зміни».');
+});
+$('verifyPractice').addEventListener('click',verifyPractice);
+$('exportReport').addEventListener('click',exportReport);
+</script>
+</body>
+</html>
